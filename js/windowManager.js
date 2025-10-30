@@ -76,8 +76,12 @@ export class WindowManager {
         windowElement.className = 'win98-window';
 
         // Random position (avoid edges)
-        const maxX = window.innerWidth - 320;
-        const maxY = window.innerHeight - 300;
+        // Adjust window size estimate for mobile (75% of 300px = 225px)
+        const isMobile = window.innerWidth <= 768;
+        const windowWidth = isMobile ? 225 : 300;
+        const windowHeight = isMobile ? 225 : 300;
+        const maxX = window.innerWidth - windowWidth - 20; // 20px padding
+        const maxY = window.innerHeight - windowHeight - 20;
         const x = Math.max(0, Math.random() * maxX);
         const y = Math.max(0, Math.random() * maxY);
         windowElement.style.left = `${x}px`;
@@ -130,7 +134,7 @@ export class WindowManager {
     }
 
     /**
-     * Make window draggable
+     * Make window draggable (supports both mouse and touch)
      */
     makeDraggable(element) {
         const titleBar = element.querySelector('.win98-title-bar');
@@ -142,15 +146,31 @@ export class WindowManager {
         let xOffset = 0;
         let yOffset = 0;
 
+        // Helper to get coordinates from mouse or touch event
+        const getEventCoords = (e) => {
+            if (e.touches && e.touches.length > 0) {
+                return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            }
+            return { x: e.clientX, y: e.clientY };
+        };
+
         const dragStart = (e) => {
             if (e.target.classList.contains('win98-close-btn')) {
                 return;
             }
 
-            initialX = e.clientX - xOffset;
-            initialY = e.clientY - yOffset;
+            const coords = getEventCoords(e);
+            initialX = coords.x - xOffset;
+            initialY = coords.y - yOffset;
 
-            if (e.target === titleBar || titleBar.contains(e.target)) {
+            // On touch devices (mobile/tablet), allow dragging from anywhere in the window
+            // On mouse devices, only allow dragging from title bar
+            const isTouchEvent = e.type.startsWith('touch');
+            const isValidTarget = isTouchEvent ?
+                (element.contains(e.target)) :
+                (e.target === titleBar || titleBar.contains(e.target));
+
+            if (isValidTarget) {
                 isDragging = true;
             }
         };
@@ -158,8 +178,9 @@ export class WindowManager {
         const drag = (e) => {
             if (isDragging) {
                 e.preventDefault();
-                currentX = e.clientX - initialX;
-                currentY = e.clientY - initialY;
+                const coords = getEventCoords(e);
+                currentX = coords.x - initialX;
+                currentY = coords.y - initialY;
 
                 xOffset = currentX;
                 yOffset = currentY;
@@ -183,9 +204,15 @@ export class WindowManager {
             el.dataset.lastY = yPos;
         };
 
+        // Mouse events (only on title bar)
         titleBar.addEventListener('mousedown', dragStart);
         document.addEventListener('mousemove', drag);
         document.addEventListener('mouseup', dragEnd);
+
+        // Touch events (entire window is draggable on mobile/tablet)
+        element.addEventListener('touchstart', dragStart, { passive: false });
+        document.addEventListener('touchmove', drag, { passive: false });
+        document.addEventListener('touchend', dragEnd);
     }
 
     /**

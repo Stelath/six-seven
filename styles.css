@@ -215,3 +215,54 @@ body {
     color: #ffff00 !important;
     font-weight: bold;
 }
+
+/* Mobile and Tablet Responsive Styles */
+@media (max-width: 768px) {
+    /* Scale windows to 75% (3/4) of original size on mobile */
+    .win98-window {
+        width: 225px; /* 75% of 300px */
+    }
+
+    /* Scale title bar font slightly smaller */
+    .win98-title-bar {
+        font-size: 10px;
+        padding: 2px 4px;
+    }
+
+    /* Scale close button */
+    .win98-close-btn {
+        width: 14px;
+        height: 12px;
+        font-size: 9px;
+    }
+
+    /* Reduce content padding */
+    .win98-content {
+        padding: 8px;
+    }
+
+    /* Position debug button so it doesn't overlap as much */
+    #debug-toggle {
+        top: 5px;
+        right: 5px;
+        padding: 6px 10px;
+        font-size: 10px;
+    }
+
+    /* Scale debug panel for mobile */
+    #debug-panel {
+        top: 40px;
+        right: 5px;
+        min-width: 240px;
+        font-size: 11px;
+        padding: 12px;
+    }
+
+    #debug-panel h3 {
+        font-size: 12px;
+    }
+
+    .debug-section div {
+        font-size: 10px;
+    }
+}
