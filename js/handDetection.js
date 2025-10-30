@@ -132,9 +132,9 @@ export class HandDetector {
         }
 
         // In MediaPipe coordinates, Y increases downward
-        // So palm facing up means normal Y is negative
-        // Check if Y component is negative and significant
-        return palmNormal.y < -CONFIG.PALM_UP_THRESHOLD;
+        // So palm facing up means normal Y is positive
+        // Check if Y component is positive and significant
+        return palmNormal.y > CONFIG.PALM_UP_THRESHOLD;
     }
 
     /**
