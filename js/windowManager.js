@@ -189,7 +189,7 @@ export class WindowManager {
             }
         };
 
-        const dragEnd = (e) => {
+        const dragEnd = () => {
             initialX = currentX;
             initialY = currentY;
             isDragging = false;

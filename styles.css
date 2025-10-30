@@ -19,6 +19,7 @@ body {
     height: 100vh;
     object-fit: cover;
     z-index: 0;
+    transform: scaleX(-1); /* Mirror the camera feed like a mirror */
 }
 
 /* Canvas for hand tracking visualization (optional) */
@@ -30,6 +31,7 @@ body {
     height: 100vh;
     z-index: 1;
     pointer-events: none;
+    transform: scaleX(-1); /* Mirror the canvas to match camera */
 }
 
 /* Container for windows */
