@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Six-Seven Hand Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <video id="camera" autoplay playsinline></video>
+    <canvas id="output_canvas"></canvas>
+    <div id="windows-container"></div>
+
+    <!-- Debug Toggle Button -->
+    <button id="debug-toggle" title="Toggle Debug Mode (D)">DEBUG</button>
+
+    <!-- Debug Info Panel -->
+    <div id="debug-panel" style="display: none;">
+        <h3>Debug Info</h3>
+        <div class="debug-section">
+            <strong>Hands Detected:</strong>
+            <div id="debug-hands">Left: ✗ | Right: ✗</div>
+        </div>
+        <div class="debug-section">
+            <strong>Hand Positions (Y):</strong>
+            <div id="debug-positions">Left: -- | Right: --</div>
+        </div>
+        <div class="debug-section">
+            <strong>Movement Variance:</strong>
+            <div id="debug-variance">Left: -- | Right: --</div>
+        </div>
+        <div class="debug-section">
+            <strong>Detection Status:</strong>
+            <div id="debug-pumping">Pumping: ✗</div>
+            <div id="debug-synced">Synced: ✗</div>
+        </div>
+        <div class="debug-section">
+            <strong>Windows:</strong>
+            <div id="debug-windows">0 / 50</div>
+        </div>
+        <div class="debug-section">
+            <strong>FPS:</strong>
+            <div id="debug-fps">--</div>
+        </div>
+        <div class="debug-section">
+            <strong>Last Spawn:</strong>
+            <div id="debug-spawn">--</div>
+        </div>
+    </div>
+
+    <!-- MediaPipe Hands CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
+    <!-- Main Application (ES6 Module) -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

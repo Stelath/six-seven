@@ -1,0 +1,217 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    font-family: "MS Sans Serif", "Microsoft Sans Serif", sans-serif;
+    position: relative;
+}
+
+/* Camera feed - fullscreen background */
+#camera {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: 0;
+}
+
+/* Canvas for hand tracking visualization (optional) */
+#output_canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Container for windows */
+#windows-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* Windows 98 Window Styling */
+.win98-window {
+    position: absolute;
+    width: 300px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #dfdfdf #808080 #808080 #dfdfdf;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    pointer-events: auto;
+    cursor: default;
+}
+
+/* Title bar */
+.win98-title-bar {
+    background: linear-gradient(to right, #000080, #1084d0);
+    color: white;
+    padding: 3px 5px;
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move;
+    user-select: none;
+}
+
+.win98-title {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Close button */
+.win98-close-btn {
+    width: 16px;
+    height: 14px;
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #ffffff #000000 #000000 #ffffff;
+    font-size: 10px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-left: 5px;
+}
+
+.win98-close-btn:hover {
+    background: #e0e0e0;
+}
+
+.win98-close-btn:active {
+    border-color: #000000 #ffffff #ffffff #000000;
+}
+
+/* Window content */
+.win98-content {
+    padding: 10px;
+    background: #c0c0c0;
+    border-top: 1px solid #808080;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.win98-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #808080;
+}
+
+/* Inner border effect */
+.win98-window::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    border: 1px solid;
+    border-color: #ffffff #000000 #000000 #ffffff;
+    pointer-events: none;
+}
+
+/* Debug Toggle Button */
+#debug-toggle {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    padding: 8px 12px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #000000 #000000 #ffffff;
+    font-family: "MS Sans Serif", "Microsoft Sans Serif", sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    pointer-events: auto;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+}
+
+#debug-toggle:hover {
+    background: #e0e0e0;
+}
+
+#debug-toggle:active {
+    border-color: #000000 #ffffff #ffffff #000000;
+}
+
+#debug-toggle.active {
+    background: #000080;
+    color: white;
+}
+
+/* Debug Info Panel */
+#debug-panel {
+    position: fixed;
+    top: 50px;
+    right: 10px;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.85);
+    color: #00ff00;
+    padding: 15px;
+    border: 2px solid #00ff00;
+    border-radius: 5px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    min-width: 280px;
+    max-width: 350px;
+    pointer-events: auto;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+}
+
+#debug-panel h3 {
+    margin: 0 0 10px 0;
+    color: #00ff00;
+    font-size: 14px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #00ff00;
+    padding-bottom: 5px;
+}
+
+.debug-section {
+    margin-bottom: 10px;
+}
+
+.debug-section strong {
+    display: block;
+    margin-bottom: 3px;
+    color: #00ffff;
+}
+
+.debug-section div {
+    margin-left: 10px;
+    color: #00ff00;
+}
+
+#debug-panel .debug-section div {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+}
+
+/* Highlight active states */
+.debug-active {
+    color: #ffff00 !important;
+    font-weight: bold;
+}
